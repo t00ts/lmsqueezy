@@ -55,7 +55,7 @@ pub struct CheckoutData {
     pub billing_address: Vec<BillingAddress>,
     pub tax_number: String,
     pub discount_code: String,
-    pub custom: Vec<Value>,
+    pub custom: Value,
     pub variant_quantities: Vec<Value>,
 }
 
@@ -173,7 +173,7 @@ pub struct CreateCheckoutCheckoutData {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub discount_code: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub custom: Option<Vec<Value>>,
+    pub custom: Option<Value>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub variant_quantities: Option<Vec<i64>>,
 }

@@ -21,9 +21,9 @@ pub struct Links {
 
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
 pub struct Response<T> {
-    jsonapi: Option<JsonAPI>,
-    links: Option<Links>,
-    data: Option<ResponseData<T>>,
+    pub jsonapi: Option<JsonAPI>,
+    pub links: Option<Links>,
+    pub data: Option<ResponseData<T>>,
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
@@ -37,13 +37,13 @@ pub struct VecResponse<T> {
 pub struct ResponseData<T> {
     pub r#type: String,
     pub id: String,
-    pub relationships: Option<HashMap<String, HashMap<String, RelationShip>>>,
+    pub relationships: Option<HashMap<String, HashMap<String, Relationship>>>,
     pub attributes: T,
     pub links: Option<Links>,
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
-pub struct RelationShip {
+pub struct Relationship {
     related: Option<String>,
     #[serde(rename = "self")]
     _self: Option<String>,

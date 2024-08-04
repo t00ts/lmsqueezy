@@ -31,6 +31,8 @@ pub struct WebhookLicenseEvent<T> {
 pub struct WebhookEventMeta<T> {
     pub event_name: String,
     pub custom_data: T,
+    pub test_mode: bool,
+    pub webhook_id: String,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -45,7 +47,7 @@ pub struct WebhookOrderData {
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct WebhookSubscriptionData {
     pub r#type: String,
-    pub id: i64,
+    pub id: String,
     pub attributes: SubscriptionResponse,
     pub relationships: WebhookRelationships,
     pub links: WebhookLinks,
@@ -64,15 +66,23 @@ pub struct WebhookLicenseData {
 pub struct WebhookRelationships {
     pub store: RelationshipLinks,
     pub customer: RelationshipLinks,
-    pub order_items: RelationshipLinks,
+    #[serde(rename = "order-item")]
+    pub order_item: RelationshipLinks,
+    #[serde(rename = "subscription-items")]
     pub subscriptions: RelationshipLinks,
-    pub license_keys: RelationshipLinks,
+    #[serde(rename = "subscription-invoices")]
+    pub invoices: RelationshipLinks,
     #[serde(rename = "discount-redemptions")]
-    pub discount_redemptions: RelationshipLinks,
+    pub discount_redemptions: Option<RelationshipLinks>,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct RelationshipLinks {
+    pub links: RelationshipLinksInner,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct RelationshipLinksInner {
     pub related: String,
     #[serde(rename = "self")]
     pub link_self: String,
